@@ -17,7 +17,6 @@ spec:
           image: ghcr.io/baninbanryenog/oi-was:1a0ba4e
           ports:
             - containerPort: 8000
-          command: ["sh","-c"]
           readinessProbe:
             httpGet: { path: "/", port: 8000 }
             initialDelaySeconds: 5
