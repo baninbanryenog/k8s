@@ -16,7 +16,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:279650b
+          image: ghcr.io/baninbanryenog/oi-was:c92cb8c
           ports:
             - containerPort: 8000
           readinessProbe:
