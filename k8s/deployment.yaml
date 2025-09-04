@@ -14,7 +14,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:9717747
+          image: ghcr.io/baninbanryenog/oi-was:c1e1757
           ports:
             - containerPort: 8000
           command: ["sh","-c"]
