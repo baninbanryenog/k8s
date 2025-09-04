@@ -14,7 +14,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:main   # 액션이 쓰는 최신 태그면 그대로
+          image: ghcr.io/baninbanryenog/oi-was:c92cb8c
           ports:
             - containerPort: 8000
           command: ["sh","-c"]
