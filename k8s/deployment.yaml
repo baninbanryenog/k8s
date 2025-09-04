@@ -4,26 +4,29 @@ metadata:
   name: oi-was
   namespace: oi
 spec:
-  replicas: 2
+  replicas: 1
   selector:
-    matchLabels:
-      app: oi-was
+    matchLabels: { app: oi-was }
   template:
     metadata:
-      labels:
-        app: oi-was
+      labels: { app: oi-was }
     spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:c92cb8c
+          image: ghcr.io/baninbanryenog/oi-was:main   # 액션이 쓰는 최신 태그면 그대로
           ports:
             - containerPort: 8000
-          readinessProbe:
-            httpGet: { path: "/", port: 8000 }
-            initialDelaySeconds: 3
-            periodSeconds: 5
-          livenessProbe:
-            httpGet: { path: "/", port: 8000 }
-            initialDelaySeconds: 15
-            periodSeconds: 10
+          command: ["sh","-c"]
+          args:
+            - |
+              echo "== debug start ==";
+              echo "PATH=$PATH";
+              which gunicorn || echo "gunicorn NOT FOUND";
+              python -V || true;
+              python -c "import importlib.util as u; print('has app:', bool(u.find_spec('app'))); print('has gunicorn:', bool(u.find_spec('gunicorn')))" || true;
+              ls -al;
+              echo "sleeping..."; sleep 3600
+          # ↓ 디버그 동안 프로브는 잠시 제거(안 그러면 계속 재시작됨)
+          # readinessProbe: null
+          # livenessProbe: null
