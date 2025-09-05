@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:main
+          image: ghcr.io/baninbanryenog/oi-was:54898d4
           ports: [{ containerPort: 8000 }]
           readinessProbe: { httpGet: { path: "/", port: 8000 }, initialDelaySeconds: 5, periodSeconds: 5 }
           livenessProbe:  { httpGet: { path: "/", port: 8000 }, initialDelaySeconds: 20, periodSeconds: 10 }
