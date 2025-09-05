@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: nginxdemos/hello:plain-text
+          image: ghcr.io/baninbanryenog/oi-was:d03211b
           ports: [{ containerPort: 80 }]
           readinessProbe: { httpGet: { path: "/", port: 80 }, initialDelaySeconds: 3, periodSeconds: 5 }
           livenessProbe:  { httpGet: { path: "/", port: 80 }, initialDelaySeconds: 10, periodSeconds: 10 }
