@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:1d4ba70
+          image: ghcr.io/baninbanryenog/oi-was:6779d3d
           ports:
             - containerPort: 8000
           env:
