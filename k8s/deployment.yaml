@@ -5,16 +5,40 @@ metadata:
   namespace: oi
 spec:
   replicas: 2
-  selector: { matchLabels: { app: oi-was } }
+  selector:
+    matchLabels: { app: oi-was }
   template:
-    metadata: { labels: { app: oi-was } }
+    metadata:
+      labels: { app: oi-was }
     spec:
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:0038da9
-          ports: [{ containerPort: 8000 }]
+          image: ghcr.io/<OWNER>/oi-was:main
+          ports:
+            - containerPort: 8000
           env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef: { name: oi-was-secrets, key: DB_URL }  # (아래 Secret 참고). 당장 테스트면 value: 로 박아도 됨
             - name: REDIS_URL
               value: redis://redis:6379/0
-          readinessProbe: { httpGet: { path: "/", port: 8000 }, initialDelaySeconds: 5, periodSeconds: 5 }
-          livenessProbe:  { httpGet: { path: "/", port: 8000 }, initialDelaySeconds: 20, periodSeconds: 10 }
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef: { name: oi-was-secrets, key: SECRET_KEY }
+            - name: CF_ORIGIN
+              value: http://localhost:3000       # 프론트 도메인/포트로 교체
+            - name: COOKIE_SECURE
+              value: "0"                         # HTTPS면 "1"
+            - name: ABSOLUTE_TIMEOUT_SEC
+              value: "7200"                      # 2시간(원하면 0으로 비활성)
+            # (디버깅이 필요할 땐 아래 주석 해제)
+            # - name: GUNICORN_CMD_ARGS
+            #   value: "--log-level debug --capture-output --preload"
+          readinessProbe:
+            httpGet: { path: "/healthz", port: 8000 }
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: "/healthz", port: 8000 }
+            initialDelaySeconds: 20
+            periodSeconds: 10
