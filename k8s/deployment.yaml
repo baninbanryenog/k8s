@@ -5,23 +5,13 @@ metadata:
   namespace: oi
 spec:
   replicas: 2
-  selector:
-    matchLabels: { app: oi-was }
+  selector: { matchLabels: { app: oi-was } }
   template:
-    metadata:
-      labels: { app: oi-was }
+    metadata: { labels: { app: oi-was } }
     spec:
-      terminationGracePeriodSeconds: 30
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:34f3a4c
-          ports:
-            - containerPort: 8000
-          readinessProbe:
-            httpGet: { path: "/", port: 8000 }
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          livenessProbe:
-            httpGet: { path: "/", port: 8000 }
-            initialDelaySeconds: 20
-            periodSeconds: 10
+          image: nginxdemos/hello:plain-text
+          ports: [{ containerPort: 80 }]
+          readinessProbe: { httpGet: { path: "/", port: 80 }, initialDelaySeconds: 3, periodSeconds: 5 }
+          livenessProbe:  { httpGet: { path: "/", port: 80 }, initialDelaySeconds: 10, periodSeconds: 10 }
