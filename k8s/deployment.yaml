@@ -13,5 +13,8 @@ spec:
         - name: app
           image: ghcr.io/baninbanryenog/oi-was:54898d4
           ports: [{ containerPort: 8000 }]
+          env:
+            - name: REDIS_URL
+              value: redis://redis:6379/0
           readinessProbe: { httpGet: { path: "/", port: 8000 }, initialDelaySeconds: 5, periodSeconds: 5 }
           livenessProbe:  { httpGet: { path: "/", port: 8000 }, initialDelaySeconds: 20, periodSeconds: 10 }
