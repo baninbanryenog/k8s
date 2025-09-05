@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/baninbanryenog/oi-was:2060c2f
+          image: ghcr.io/baninbanryenog/oi-was:a801434
           ports: [{ containerPort: 8000 }]
           env:
             - name: REDIS_URL
