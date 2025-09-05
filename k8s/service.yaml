@@ -4,10 +4,9 @@ metadata:
   name: oi-was
   namespace: oi
 spec:
-  selector:
-    app: oi-was
+  selector: { app: oi-was }
   ports:
     - name: http
       port: 80
-      targetPort: 8000
+      targetPort: 80
   type: ClusterIP
